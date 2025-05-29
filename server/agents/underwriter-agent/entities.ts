@@ -1,4 +1,4 @@
-import { ResponseFormatJsonSchema } from "@azure/ai-projects";
+import { ResponseFormatJsonSchema } from "@azure/ai-agents";
 
 export type RunEvent = ThreadMessageCompleteEvent;
 

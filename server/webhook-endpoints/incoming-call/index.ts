@@ -38,7 +38,7 @@ const screenCall: RequestHandler = async (req, res) => {
   try {
     log.warn(
       INCOMING_CALL_WEBHOOK_ROUTE,
-      `screened call from ${payload.From}. add to ALLOWED_PHONE_NUMBERS env var`,
+      `screened call from ${payload.From}. add to ALLOWED_PHONE_NUMBERS env var`
     );
 
     const twiml = `\
@@ -57,7 +57,7 @@ const screenCall: RequestHandler = async (req, res) => {
 export const incomingCallWebhookHandler: RequestHandler = async (
   req,
   res,
-  next,
+  next
 ) => {
   const payload = req.body as TwilioCallWebhookPayload;
   const callSid = payload.CallSid;
@@ -133,11 +133,11 @@ export const incomingCallWebhookHandler: RequestHandler = async (
       ...relayConfig,
       callSid,
       context,
-      welcomeGreetingInterruptible: false,
+      welcomeGreetingInterruptible: "false",
+      intelligenceService: process.env.CONVINTEL_SERVICE_SID || "",
 
       parameters: { welcomeGreeting }, // include greeting in parameters so the websocket server can add the welcome message to the turn store
       welcomeGreeting,
-      // @ts-expect-error
       debug: "tokens-played",
     });
 

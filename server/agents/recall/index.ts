@@ -72,14 +72,14 @@ export class RecallAgent {
         };
         return demoLog;
       })
-      .filter((item) => !!item)
+      .filter((item): item is RecallLog => !!item)
       .slice(0, 3);
 
     for (const demoLog of demoLogs) {
       await new Promise((resolve) =>
         setTimeout(async () => {
           resolve(null);
-        }, 1000 + Math.floor(2000 * Math.random())),
+        }, 1000 + Math.floor(2000 * Math.random()))
       );
 
       await sendDemoLog({ ...demoLog, dateCreated: new Date().toISOString() });
@@ -109,7 +109,7 @@ function turnsToTranscript(turns: TurnRecord[]) {
     .filter(
       (turn): turn is BotTextTurn | HumanTextTurn =>
         (turn.role === "bot" && turn.type === "text") ||
-        (turn.role === "human" && turn.type === "text"),
+        (turn.role === "human" && turn.type === "text")
     )
     .map((turn) => `[${turn.role}]: ${turn.content}`)
     .join("\n\n");

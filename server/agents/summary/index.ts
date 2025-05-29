@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { nanoid } from "nanoid";
 import { AzureOpenAI } from "openai";
-import type { ChatCompletion } from "openai/src/resources.js";
+import type { ChatCompletion } from "openai/resources/chat/completions";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import type { TopicLog } from "../../common/session-context.js";
@@ -139,7 +139,7 @@ function turnsToTranscript(turns: TurnRecord[]) {
     .filter(
       (turn): turn is BotTextTurn | HumanTextTurn =>
         (turn.role === "bot" && turn.type === "text") ||
-        (turn.role === "human" && turn.type === "text"),
+        (turn.role === "human" && turn.type === "text")
     )
     .map((turn) => `[${turn.role}]: ${turn.content}`)
     .join("\n\n");

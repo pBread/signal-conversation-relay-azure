@@ -14,12 +14,16 @@
     "test": "vitest --config ./scripts/vitest.config.ts",
     "ui": "cd ui; npm run dev",
     "ui-install": "cd ui; npm install",
-    "data:populate": "tsx scripts/data/populate.ts"
+    "data:populate": "tsx scripts/data/populate.ts",
+    "build": "tsc",
+    "start": "node dist/server/server.js"
   },
   "dependencies": {
+    "@azure/ai-agents": "1.0.0-beta.3",
     "@azure/ai-projects": "^1.0.0-beta.8",
     "@azure/identity": "^4.9.1",
     "@azure/search-documents": "^12.1.0",
+    "@types/ws": "^8.18.1",
     "dotenv-flow": "^4.1.0",
     "express": "^5.1.0",
     "express-ws": "^5.0.2",
@@ -35,6 +39,7 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
     "@types/express": "^5.0.1",
     "@types/express-ws": "^3.0.5",
     "@types/lodash.chunk": "^4.2.9",

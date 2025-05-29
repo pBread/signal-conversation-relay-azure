@@ -65,7 +65,7 @@ export class SessionTurnStore {
         type: "dtmf",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -95,7 +95,7 @@ export class SessionTurnStore {
         type: "text",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -125,7 +125,7 @@ export class SessionTurnStore {
         type: "tool",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -150,7 +150,7 @@ export class SessionTurnStore {
         type: "dtmf",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -175,7 +175,7 @@ export class SessionTurnStore {
         type: "text",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -199,7 +199,7 @@ export class SessionTurnStore {
         role: "system",
         version: 0,
       },
-      (path) => this.eventEmitter.emit("turnUpdated", id, path),
+      (path) => this.eventEmitter.emit("turnUpdated", id, path)
     );
 
     this.turnMap.set(turn.id, turn);
@@ -219,7 +219,7 @@ export class SessionTurnStore {
       (turn) =>
         turn.role === "bot" &&
         turn.type === "tool" &&
-        (turn as BotToolTurn).tool_calls.some((tool) => tool.id === toolId),
+        (turn as BotToolTurn).tool_calls.some((tool) => tool.id === toolId)
     ) as BotToolTurn | undefined;
 
     if (!toolTurn) return;
@@ -272,13 +272,13 @@ export class SessionTurnStore {
       (turn) =>
         turn.role === "bot" &&
         turn.type === "text" &&
-        turn.content.includes(interruptedClause),
+        turn.content.includes(interruptedClause)
     ) as BotTextTurn | undefined;
 
     if (!interruptedTurn) {
       this.log.warn(
         "turn-store",
-        `could not find interrupted turn: ${utteranceUntilInterrupt}`,
+        `could not find interrupted turn: ${utteranceUntilInterrupt}`
       );
       return;
     }
@@ -300,12 +300,12 @@ export class SessionTurnStore {
       (turn) =>
         turn.role === "bot" &&
         turn.type === "text" &&
-        turn.content.includes(interruptedClause),
+        turn.content.includes(interruptedClause)
     ) as BotTextTurn | undefined;
 
     if (!interruptedTurn) {
       interruptedTurn = turnsDecending.find(
-        (turn) => turn.role === "bot" && turn.type === "text",
+        (turn) => turn.role === "bot" && turn.type === "text"
       ) as BotTextTurn;
 
       interruptedTurn.content = clipString(interruptedTurn.content, 0.75);
@@ -315,9 +315,10 @@ export class SessionTurnStore {
     turnsDecending
       .filter(
         (turn) =>
+          interruptedTurn &&
           turn.order > interruptedTurn.order && // only delete turns after the interrupted turn
           turn.role === "bot" && // only bot turns, not system, are deleted
-          (turn.type === "dtmf" || turn.type === "text"),
+          (turn.type === "dtmf" || turn.type === "text")
       )
       .forEach((turn) => this.delete(turn.id));
 
@@ -326,12 +327,12 @@ export class SessionTurnStore {
     const indexOfInterruption = prevContent.lastIndexOf(interruptedClause); // find where to split the expected content
     const contentSplitWithInterrupt = prevContent.substring(
       0,
-      indexOfInterruption + interruptedClause.length,
+      indexOfInterruption + interruptedClause.length
     ); // substring with interruption
 
     const contentSplitWithOutInterrupt = prevContent.substring(
       0,
-      indexOfInterruption,
+      indexOfInterruption
     ); // substring without interruption
 
     // interrupted clause was not sufficient to find the location
@@ -365,7 +366,7 @@ export class SessionTurnStore {
       (turn) =>
         turn.role === "bot" &&
         turn.type === "tool" &&
-        turn.status === "streaming",
+        turn.status === "streaming"
     ) as BotToolTurn | undefined;
 
     if (!interruptedTurn) return;
@@ -387,7 +388,7 @@ export class SessionTurnStore {
       .filter(
         (turn) =>
           turn.order > interruptedTurn.order && // only delete turns after the interrupted turn
-          turn.role === "bot",
+          turn.role === "bot"
       )
       .forEach((turn) => this.delete(turn.id));
   };
